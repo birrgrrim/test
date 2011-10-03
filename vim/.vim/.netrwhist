@@ -1,0 +1,10 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =8
+let g:netrw_dirhist_1='/home/birrgrrim/work/sdl/trunk/rtdl-tests'
+let g:netrw_dirhist_2='/home/birrgrrim/work/sdl/trunk'
+let g:netrw_dirhist_3='/home/birrgrrim/work/sdl/trunk/rtdl2xxx'
+let g:netrw_dirhist_4='/home/birrgrrim/work/sdl/trunk/rtdl2xxx/rtdl-tests'
+let g:netrw_dirhist_5='/home/birrgrrim/work/sdl/trunk/rtdl2xxx/rtdl-tests/development'
+let g:netrw_dirhist_6='/home/birrgrrim/work/sdl/trunk/rtdl2xxx/rtdl-tests/development/Constructor'
+let g:netrw_dirhist_7='/home/birrgrrim/work/sdl/trunk/rtdl2xxx/rtdl-tests/development/Constructor/constructors01'
+let g:netrw_dirhist_8='/home/birrgrrim/work/sdl/trunk/rtdl2xxx/TDL/rtdl2java'
