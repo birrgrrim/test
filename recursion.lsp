@@ -2,7 +2,11 @@
 ;(before 2 '(1 2 3)) -> (1 2)
 ;(before 10 '(1 2 3)) -> nil
 (defun before (el lst)
-  nil)
+  (if lst
+    (if (eq (car lst) el)
+      (cons (car lst) nil)
+      (cons (car lst) (before el (cdr lst))))
+    nil))
 
 ;(my-append '(1 2) '(4 5)) -> (1 2 3 4)
 ;(my-append '(1) nil) -> nil
