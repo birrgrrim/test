@@ -1,3 +1,11 @@
+(load "tester.lsp")
+
+(setq before-test-cases
+  (list
+    (make-test-case :input '(1 (1 2 3)) :output '(1))
+    (make-test-case :input '(2 (1 2 3)) :output '(1 2))
+    (make-test-case :input '(10 (1 2 3)) :output nil)))
+
 ;(before 1 '(1 2 3)) -> (1)
 ;(before 2 '(1 2 3)) -> (1 2)
 ;(before 10 '(1 2 3)) -> nil
