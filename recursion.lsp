@@ -136,9 +136,9 @@
 
 (defun my-append-up (lst1 lst2)
   "Appends two lists."
-  (if (cdr lst1)
+  (if lst1
     (cons (car lst1) (my-append-up (cdr lst1) lst2))
-    (cons (car lst1) lst2)))
+    lst2))
 
 ;(remove-dublicates '(1 2 3 4)) -> (1 2 3 4)
 ;(remove-dublicates '(1 2 1 2)) -> (1 2)
