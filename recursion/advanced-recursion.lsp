@@ -46,6 +46,7 @@
          (append-two (cdr lst1) lst2)))))
 
 (defun advanced-append (&rest lsts)
-  (cond 
-    ((null lsts) nil)
-    (t (append-two (car lsts) (advanced-append (cdr lsts))))))
+  (if lsts
+    (append-two (car lsts) (apply #'advanced-append (cdr lsts)))
+    nil))
+
