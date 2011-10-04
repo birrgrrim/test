@@ -37,5 +37,15 @@
 (defun advanced-before (a lst &key (quantity 1))
   nil)
 
+;(advanced-append '(1 2) '(3 4) '(5 6)) -> (1 2 3 4 5 6)
+(defun append-two (lst1 lst2)
+  (cond
+    ((null lst1) lst2)
+    (t (cons 
+         (car lst1) 
+         (append-two (cdr lst1) lst2)))))
+
 (defun advanced-append (&rest lsts)
-  nil)
+  (cond 
+    ((null lsts) nil)
+    (t (append-two (car lsts) (advanced-append (cdr lsts))))))
