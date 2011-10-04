@@ -10,12 +10,13 @@
     (cons (car lst) (cons-end (cdr lst) el))
     (list el)))
 
-(defun flatten (lst &optional res)
-  (if lst
-    (if (atom lst)
-      (cons-end res lst)
-      (prog2 (flatten (car lst) res) (flatten (cdr lst) res)))
-    res))
+(defun flatten (lst)
+  (cond 
+    ((null lst) nil)
+    ((atom lst) lst)
+    (t (cons
+         (flatten (car lst))
+         (flatten (cdr lst))))))
 
 ;(between 1 3 '(1 2 3 4)) -> (1 2 3)
 ;(between 3 1 '(1 2 3 4)) -> nil
