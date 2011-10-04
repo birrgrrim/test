@@ -13,8 +13,8 @@
 (defun flatten (lst)
   (cond 
     ((null lst) nil)
-    ((atom lst) lst)
-    (t (cons
+    ((atom lst) (list lst))
+    (t (append
          (flatten (car lst))
          (flatten (cdr lst))))))
 
