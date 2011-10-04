@@ -5,8 +5,17 @@
   nil)
 
 ;(flatten '((1) (2 (3)) (4 (5)))) -> (1 2 3 4 5)
-(defun flatten (lst)
-  nil)
+(defun cons-end (lst el)
+  (if lst
+    (cons (car lst) (cons-end (cdr lst) el))
+    (list el)))
+
+(defun flatten (lst &optional res)
+  (if lst
+    (if (atom lst)
+      (cons-end res lst)
+      (prog2 (flatten (car lst) res) (flatten (cdr lst) res)))
+    res))
 
 ;(between 1 3 '(1 2 3 4)) -> (1 2 3)
 ;(between 3 1 '(1 2 3 4)) -> nil
@@ -25,4 +34,7 @@
 ;(advanced-before 2 '(1 2 3) :quantity 2) -> nil
 ;(advanced-before 2 '(1 2 3 1 2 3) :quantity 2) -> (1 2 3 1 2)
 (defun advanced-before (a lst &key (quantity 1))
+  nil)
+
+(defun advanced-append (&rest lsts)
   nil)
