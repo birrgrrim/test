@@ -1,4 +1,4 @@
-(load "tester.lsp")
+(load "../utils/tester.lsp")
 
 (setq before-test-cases
   (list
