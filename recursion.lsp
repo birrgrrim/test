@@ -4,33 +4,51 @@
   (list
     (make-test-case :input '(1 (1 2 3)) :output '(1))
     (make-test-case :input '(2 (1 2 3)) :output '(1 2))
+    (make-test-case :input '(nil (1 nil 3)) :output '(1 nil))
+    (make-test-case :input '(2 (nil 2 nil)) :output '(nil 2))
+    (make-test-case :input '(nil (1 2 nil)) :output '(1 2 nil))
     (make-test-case :input '(10 (1 2 3)) :output nil)))
 
 (setq append-test-cases
   (list
     (make-test-case :input '((1 2) (3 4)) :output '(1 2 3 4))
+    (make-test-case :input '(nil nil) :output nil)
+    (make-test-case :input '((nil) nil) :output '(nil))
     (make-test-case :input '((1) nil) :output '(1))))
 
 (setq remove-dups-test-cases
   (list
     (make-test-case :input '((1 2 3 4)) :output '(1 2 3 4))
     (make-test-case :input '((1 2 3 1)) :output '(1 2 3))
+    (make-test-case :input '(nil) :output nil)
     (make-test-case :input '((1 2 1 2)) :output '(1 2))))
 
 (setq subsets-test-cases
   (list
     (make-test-case :input '((1 2 3) (1 2)) :output '(3))
     (make-test-case :input '((1 2 3) (1 2 3)) :output nil)
+    (make-test-case :input '(nil (1 2 3)) :output nil)
+    (make-test-case :input '((nil) nil) :output '(nil))
+    (make-test-case :input '((1 2 3) nil) :output '(1 2 3))
+    (make-test-case :input '(nil nil) :output nil)
     (make-test-case :input '((1 2) (3 4)) :output '(1 2))))
 
 (setq addsets-test-cases
   (list
     (make-test-case :input '((1 2 3) (1 2)) :output '(1 2 3))
+    (make-test-case :input '(nil (1 2 3)) :output '(1 2 3))
+    (make-test-case :input '((1 2 3) nil) :output '(1 2 3))
+    (make-test-case :input '(nil nil) :output nil)
+    (make-test-case :input '((nil) nil) :output '(nil))
     (make-test-case :input '((1 2 3) (4 5)) :output '(1 2 3 4 5))
     (make-test-case :input '((1 2) (1 3)) :output '(1 2 3))))
 
 (setq mulsets-test-cases
   (list
+    (make-test-case :input '(nil (1 2 3)) :output nil)
+    (make-test-case :input '((1 2 3) nil) :output nil)
+    (make-test-case :input '(nil nil) :output nil)
+    (make-test-case :input '((nil) (nil)) :output '(nil))
     (make-test-case :input '((1 2 3) (1 2)) :output '(1 2))
     (make-test-case :input '((1 2) (4 5)) :output nil)
     (make-test-case :input '((1 2) (1 3)) :output '(1))))
