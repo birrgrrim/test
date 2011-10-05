@@ -1,8 +1,17 @@
 ;(group '(1 2 3 4) 2) -> ((1 2) (3 4))
 ;(group '(1 2 3 4 5) 2) -> ((1 2) (3 4) (5))
 ;(group '(1 2 3 4 5) 3) -> ((1 2 3) (4 5))
+(defun my-sublist (lst dev &optional (head nil))
+  (if (and lst (/= 0 dev))
+    (my-sublist (cdr lst) (1- dev) (cons (car lst) head))
+    (values (reverse head) lst)))
+
 (defun group (lst dev)
-  nil)
+  (if (and lst (/= 0 dev))
+    (multiple-value-bind (head tail)
+        (my-sublist lst dev)
+      (cons head (group tail dev)))
+    nil))
 
 ;(flatten '((1) (2 (3)) (4 (5)))) -> (1 2 3 4 5)
 (defun cons-end (lst el)
@@ -23,19 +32,33 @@
 ;(between 1 1 '(1 2 3 4)) -> nil
 ;(between 1 3 '(1 2 3 1 4 3)) -> (1 2 3)
 (defun between (a b lst)
-  nil)
+  (if lst
+    (if (eq a (car lst))
+      (if (eq a b)
+        (advanced-before b lst :quantity 2)
+        (advanced-before b lst))
+      (between a b (cdr lst)))
+    nil))
 
 ;read about lisp function "values"
 ;(split 2 '(1 2 3)) -> (1 2) (3)
 ;(split 4 '(1 2 3)) -> (1 2 3) nil
-(defun split (a lst)
-  nil)
+(defun split (a lst &optional head)
+  (if (and lst (/= a 0))
+    (split (1- a) (cdr lst) (cons (car lst) head))
+    (values (reverse head) lst)))
 
 ;(advanced-before 2 '(1 2 3)) -> (1 2)
 ;(advanced-before 2 '(1 2 3) :quantity 2) -> nil
 ;(advanced-before 2 '(1 2 3 1 2 3) :quantity 2) -> (1 2 3 1 2)
-(defun advanced-before (a lst &key (quantity 1))
-  nil)
+(defun advanced-before (a lst &key (res nil) (quantity 1))
+  (if (= 0 quantity) 
+    (reverse res)
+    (if lst
+      (if (eq a (car lst))
+        (advanced-before a (cdr lst) :res (cons (car lst) res) :quantity (1- quantity))
+        (advanced-before a (cdr lst) :res (cons (car lst) res) :quantity quantity))
+      nil)))
 
 ;(advanced-append '(1 2) '(3 4) '(5 6)) -> (1 2 3 4 5 6)
 (defun append-two (lst1 lst2)
