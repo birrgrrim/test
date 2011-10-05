@@ -1,3 +1,10 @@
+;; Задан список чисел. Сформировать новый список,
+;; в котором будут такие же элементы,
+;; как в исходном списке, только в упорядоченном
+;; по неубыванию (т.е. нестрогому возрастанию)
+;; порядке методом выбора (т.е. приспособить метод
+;; выбора для решения такой задачи).
+
 (defun min-elem-down (lst &optional (res (car lst)))
   "Find minimal element RES in list LST. Down-recursion."
   (if lst
@@ -29,9 +36,13 @@
     (reverse-list (cdr lst) (cons (car lst) res))
     res))
 
-(defun sort-sel (lst &optional res)
+(defun selection-sort (lst &optional res)
   "Selection sort of list LST."
   (if lst
     (let ((min-el (min-elem-down lst)))
-      (sort-sel (remove-first-entry min-el lst) (cons min-el res)))
+      (selection-sort (remove-first-entry min-el lst) (cons min-el res)))
     (reverse-list res)))
+
+;; tests
+(format t "~A -> ~A ~%" '(selection-sort '(1 3 2 6 3)) (selection-sort '(1 3 2 6 3)))
+(format t "~A -> ~A ~%" '(selection-sort nil) (selection-sort nil))

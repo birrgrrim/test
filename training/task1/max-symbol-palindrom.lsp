@@ -1,3 +1,10 @@
+;; Задан список. Сформировать новый список,
+;; который будет содержать самый длинный палиндром
+;; исходного списка. Если палиндромов максимальной
+;; длины несколько, то выдать любой из них.
+;; 
+;; Исходный список задан в виде: (as fgd asa gfdg)
+
 (defun reverse-list (lst &optional res)
   "Reverse list LST."
   (if lst
@@ -36,6 +43,13 @@
       (max-length-sublist (cdr lst) res))
     res))
 
-(defun max-palindrom (lst)
+(defun max-symbol-palindrom (lst)
   "Find maximal palindrom sublist of list LST."
   (max-length-sublist (remove-not-palindrom lst)))
+
+;; tests
+(format t "~A -> ~A ~%" '(max-symbol-palindrom '(asd fg sasa)) (max-symbol-palindrom '(asd fg sasa)))
+(format t "~A -> ~A ~%" '(max-symbol-palindrom '(asd a fg sasa)) (max-symbol-palindrom '(asd a fg sasa)))
+(format t "~A -> ~A ~%" '(max-symbol-palindrom '(asd asa kuk fg sasa)) (max-symbol-palindrom '(asd asa kuk fg sasa)))
+(format t "~A -> ~A ~%" '(max-symbol-palindrom '(asd nil sasa)) (max-symbol-palindrom '(asd nil sasa)))
+(format t "~A -> ~A ~%" '(max-symbol-palindrom nil) (max-symbol-palindrom nil))
