@@ -33,5 +33,11 @@
     (test #'add-sets-down addsets-test-cases "add-sets-down")
     (test #'add-sets-up addsets-test-cases "add-sets-up")
     (test #'multiply-sets-down mulsets-test-cases "multiply-sets-down")
-    (test #'multiply-sets-up mulsets-test-cases "multiply-sets-up"))
+    (test #'multiply-sets-up mulsets-test-cases "multiply-sets-up")
+    (test #'group group-test-cases "group")
+    (test #'flatten flatten-test-cases "flatten")
+    (test #'between between-test-cases "between")
+    (test #'split split-test-cases "split")
+    (test #'advanced-before abefore-test-cases "a-before")
+    (test #'advanced-append aappend-test-cases "a-append"))
    

@@ -1,3 +1,45 @@
+(load "../utils/tester.lsp")
+
+(setq group-test-cases
+  (list
+    (make-test-case :input '((1 2 3) 1) :output '((1) (2) (3)))
+    (make-test-case :input '((1 2 3) 0) :output '(1 2 3))
+    (make-test-case :input '((1 2 3) 2) :output '((1 2) (3)))
+    (make-test-case :input '((1 2 nil nil) 2) :output '((1 2) (nil nil)))))
+
+(setq flatten-test-cases
+  (list
+    (make-test-case :input '(((1) (2 (3)) (4 (5)))) :output '(1 2 3 4 5))
+    (make-test-case :input '((nil nil nil)) :output '(nil nil nil))
+    (make-test-case :input '(((((nil))))) :output '(nil))
+    (make-test-case :input '(nil) :output nil)))
+
+(setq between-test-cases
+  (list
+    (make-test-case :input '(1 3 (1 2 3 4)) :output '(1 2 3))
+    (make-test-case :input '(1 3 (1 2 3 1 4 3)) :output '(1 2 3))
+    (make-test-case :input '(1 1 (1 2 3 4)) :output nil)
+    (make-test-case :input '(nil nil (nil nil nil)) :output '(nil nil))))
+
+(setq split-test-cases
+  (list
+    (make-test-case :input '(2 (1 2 3)) :output (values '(1 2) '(3)))
+    (make-test-case :input '(4 (1 2 3)) :output (values '(1 2 3) nil))
+    (make-test-case :input '(2 (1 nil 3)) :output (values '(1 nil) '(3)))
+    (make-test-case :input '(1 (1)) :output (values '(1) nil))
+    (make-test-case :input '(nil nil) :output (values nil nil))))
+
+(setq abefore-test-cases
+  (list
+    (make-test-case :input '(1 (1 1 3) :quantity 2) :output '(1 1))
+    (make-test-case :input '(nil (nil nil nil) :quantity 3) :output '(nil nil nil))))
+
+(setq aappend-test-cases
+  (list
+    (make-test-case :input '((1 2) (3 4) (5 6)) :output '(1 2 3 4 5 6))
+    (make-test-case :input '((1) nil nil (2)) :output '(1 2))
+    (make-test-case :input '((1) (nil) nil) :output '(1 nil))))
+
 ;(group '(1 2 3 4) 2) -> ((1 2) (3 4))
 ;(group '(1 2 3 4 5) 2) -> ((1 2) (3 4) (5))
 ;(group '(1 2 3 4 5) 3) -> ((1 2 3) (4 5))
