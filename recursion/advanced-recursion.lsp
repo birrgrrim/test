@@ -3,15 +3,15 @@
 (setq group-test-cases
   (list
     (make-test-case :input '((1 2 3) 1) :output '((1) (2) (3)))
-    (make-test-case :input '((1 2 3) 0) :output '(1 2 3))
+    (make-test-case :input '((1 2 3) 0) :output nil)
     (make-test-case :input '((1 2 3) 2) :output '((1 2) (3)))
     (make-test-case :input '((1 2 nil nil) 2) :output '((1 2) (nil nil)))))
 
 (setq flatten-test-cases
   (list
     (make-test-case :input '(((1) (2 (3)) (4 (5)))) :output '(1 2 3 4 5))
-    (make-test-case :input '((nil nil nil)) :output '(nil nil nil))
-    (make-test-case :input '(((((nil))))) :output '(nil))
+    (make-test-case :input '((nil nil nil)) :output nil)
+    (make-test-case :input '(((((nil))))) :output nil)
     (make-test-case :input '(nil) :output nil)))
 
 (setq between-test-cases
@@ -39,6 +39,15 @@
     (make-test-case :input '((1 2) (3 4) (5 6)) :output '(1 2 3 4 5 6))
     (make-test-case :input '((1) nil nil (2)) :output '(1 2))
     (make-test-case :input '((1) (nil) nil) :output '(1 nil))))
+
+(setq aremove-test-cases
+  (list
+    (make-test-case :input '(1 (1 2 3 1 2 3)) :output '(2 3 2 3))
+    (make-test-case :input '(1 (1 2 3 1 2 3) :quantity 1) :output '(2 3 1 2 3))
+    (make-test-case :input '(1 (1 2 3 1 2 3) :quantity 4) :output '(2 3 2 3))
+    (make-test-case :input '((1) (1 2 (1) 3 1 2 3) :quantity 4) :output '(1 2 3 1 2 3))
+    (make-test-case :input '(nil (1 2 (nil) 3 nil 2 nil) :quantity 1) :output '(1 2 (nil) 3 2 nil))
+    (make-test-case :input '(nil (1 2 3 1 2 3) :quantity 4) :output '(1 2 3 1 2 3))))
 
 ;(group '(1 2 3 4) 2) -> ((1 2) (3 4))
 ;(group '(1 2 3 4 5) 2) -> ((1 2) (3 4) (5))
@@ -115,3 +124,17 @@
     (append-two (car lsts) (apply #'advanced-append (cdr lsts)))
     nil))
 
+;(advanced-remove 1 '(1 2 3 1 2 3 1 2 3) :quantity 2) -> (2 3 2 3 1 2 3)
+(defun advanced-remove-down (el lst &key (res nil) (quantity -1))
+  (if lst
+    (if (and (equal el (car lst)) (/= 0 quantity))
+      (advanced-remove-down el (cdr lst) :res res :quantity (1- quantity))
+      (advanced-remove-down el (cdr lst) :res (append res (list (car lst))) :quantity quantity))
+    res))
+
+(defun advanced-remove-up (el lst &key (quantity -1))
+  (if lst
+    (if (and (equal el (car lst)) (/= 0 quantity))
+      (advanced-remove-up el (cdr lst) :quantity (1- quantity))
+      (cons (car lst) (advanced-remove-up el (cdr lst) :quantity quantity)))
+    nil))
