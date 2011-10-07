@@ -1,0 +1,65 @@
+Consider following primitive object system:
+
+(define-object <name>
+	(<vars-list>)
+	(<messages-list>)
+	(<constructor>)
+)
+
+<vars-list> ::=
+	<name> <vars-list>
+	| (<name> <initial-value>) <vars-list>
+	| nil
+
+<messages-list> ::=
+	| (<name> (<params>) lisp-forms) <messages-list>
+	nil
+
+<constructor> ::=
+	| constructor <params> lisp-forms
+	nil
+
+Object creation:
+	(make-<typename> <params>)
+
+Inline object creation:
+	(@ (<vars-list>) (<messages-list>) lisp-forms)
+
+Message send:
+	(-> <obj> <message-name> <params>)
+
+Object is as a set of internal variables, a set of message handlers and constructor:
+	(define-object boo
+		(a b)
+		(
+			(hello () (format t "hello ~A~%" a))	;note access to the internal variable
+			(bye () (format t "bye ~A~%" b))
+		)
+		(constructor (a) (format t "creating object ~A~%" a) )	;constructor, note 'a' is bound with parameter here, not with internal variable
+	)
+this notation means that at this point a function 'make-boo' is defined, which returns an object with two variables and two message receivers. Arguments of this function are arguments of the specified constructor, the body of constructor has to be executed for the object being returned.
+
+There is a construction to send message to the object:
+	(-> boo 'hello)
+Sends message hello to object boo, the operation invokes apropriate message handler from the <messages-list> specified in object type spcification.
+
+It's also possible create inline anonymous objects:
+	(@ (a b)
+		(
+			(hello () (format t "hello ~A~%" a))
+			(bye () (format t "bye ~A~%" b))
+		)
+		(format t "creating object~%"))
+this notation means that at this point an object with two variables and two message receivers have to be created and returned as a result of the form.
+
+The task:
+
+1/ implement such object system as a set of lisp macroses and functions
+2/ suppliment object with message queue hidden field (and, possibly, other hidden fields) and implement following instruction:
+
+Wait instruction:
+	(wait (<messages-list>)
+		lisp-forms)
+
+   which could be used only in the message handlers. This instruction means that execution of message handler at given point is suspended (and controll is returned to callee) and all messages which are sent to the object and do not appear in the <messages-list> are stored in the message queue, when the message from the <message-list> is sent to the object -- apropriate handler is executed then lisp-forms from the wait instruction are called, then message handlers for messages saved in queue are executed (in order in which messages were received) and only then control is returned. Note that it's possible for object to be in a set of nested waits.
+
