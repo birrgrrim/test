@@ -138,3 +138,14 @@
       (advanced-remove-up el (cdr lst) :quantity (1- quantity))
       (cons (car lst) (advanced-remove-up el (cdr lst) :quantity quantity)))
     nil))
+
+(defun test-all ()
+    (test #'group group-test-cases "group")
+    (test #'flatten flatten-test-cases "flatten")
+    (test #'between between-test-cases "between")
+    (test #'split split-test-cases "split")
+    (test #'advanced-before abefore-test-cases "a-before")
+    (test #'advanced-append aappend-test-cases "a-append")
+    (test #'advanced-remove-down aremove-test-cases "advanced-remove-down")
+    (test #'advanced-remove-up aremove-test-cases "advanced-remove-up"))
+

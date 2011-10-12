@@ -1,0 +1,68 @@
+1. write a function tree-traverse-breadth which takes as arguments a tree and a function and applies this function to each node of the tree in breadth first order, e. g.:
+
+						1
+ 					/		\
+ 				2				3		  
+ 			/		\				\
+ 		4				5				6
+
+2. write a function tree-reduce which takes four parameters: a tree, application function (f), traversal function (t, one written in task 1 or during training), an initial value of accumulator, and performs a reduce operation on the tree, applying a = f(a, n) to each node n of the tree in the order given by t.
+
+3. write a function, which takes a binary tree as argument and returns the tree of the same topology where all nodes contain numbers in order from left to right, from up to bottom, e. g.:
+						n													1
+					/		\                       					/		\
+				n				n				--> 				2				3		  
+			/		\				\               			/		\				\
+		n				n				n           		4				5				6
+
+4. write a function which takes text file name as argument and returns a function which takes a string, representing a sequence of words, the last function has to return:
+	t		if given sequence of words appered in original text one after another
+	'sep 	if given sequence of words appered in original text with some other words beetwen them
+	nil		otherwise
+
+	the search process has to be implemented using a hash table containing all words from the text, ignoring punctuation marks
+
+5. consider HAL-9000 an automata which has infinite stack, infinite data memory space, separate fixed read-only instructions memory space and following instructions set:
+	push <number>	- push <number> to stack
+	pop				- pop from stack
+	load			- addr := pop; m := read mem from addr; push m;
+	store			- addr := pop; m := pop; write m into memory address addr
+	add				- a := pop; b := pop; push a + b
+	mult			- a := pop; b := pop; push a * b
+	div				- a := pop; b := pop; push a / b (integer division)
+	neg				- a := pop; push -a
+	swap			- a := pop; b := pop; push a; push b
+	min				- a := pop; b := pop; if (a > b) push b; else push a
+	max				- a := pop; b := pop; if (a < b) push b; else push a
+	cmp				- a := pop; b := pop; if (a == b) push 1; else push 0
+	cjmp <label>	- a := pop; if (a == 1) jump to instruction at address <addr>
+	prn				- a := pop; print a on the screen; push a
+
+	the task is:
+	a) write a function
+		(HAL-9000-compile commands)
+			which returns compiled representation of the program, where commands is a string representing instructions of the following format:
+				i :== [<label>:] <instruction> [<param>];
+				commands :== i+
+		for example:
+			l1: push 10;
+			push 20;
+			add;
+			push 30;
+			cmp;
+			cjmp l1;
+		represents infinite loop.
+	b) write an interpreter:
+		(HAL-9000-compile memory commands)
+			where memory is a hash table with pairs <address(key)>:value
+			and commands is a compiled representation of the program returned by HAL-9000-compile
+		when interpreter finishes it work it has to dump the content of the stack and memory in readable form
+	c) write a function which represents a program as an oriented graph
+	d) write a function which takes a graph program representation and returns a string with equivlent assembler code
+	e) write a function which takes a graph program representation and performs dead code elimination 
+	f) write a function which takes a graph program representation and performs tries to eliminate calculations that could be performed at compile time
+		(e.g.: sequences like "push 10; push 20; add;" have to be converted into "push 30;", more complex situations, like memory access etc are possible)
+	g) write a function which takes a graph program representation and performs jumps optimization
+
+
+
